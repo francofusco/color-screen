@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Screen</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css">
+</head>
+<body onload="setupColors()">
+
+    <div id="button-container">
+        <input type="text" id="color-picker-input">
+        <button onclick="switchToColorPage()">Start</button>
+        <button onclick="resetColors()" class="red-button">Reset colors</button>
+        <button onclick="openModal()" class="yellow-button">Help</button>
+    </div>
+
+    <br>
+
+    <div id="main-container">
+        <div id="favorites-grid"></div>
+    </div>
+
+    <br>
+
+    <div id="help-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p>This is a very simple web-page that should help using your phone as a
+        light source for light painting.</p>
+        <p>How it works:</p>
+        <ul>
+          <li>Using the color picker, select colors to add to your palette.</li>
+          <li>Double tap on any color to remove it from the list.</li>
+          <li>Clear the whole palette with the "reset" button.</li>
+          <li>Once you are happy with your selection, click on the "Start" button (you will be redirected to a blank page).</li>
+          <li>Tap the screen once to enter full-screen mode; keep tapping to show the colours of your palette one by one, with black screens in the middle.</li>
+          <li>After all colors have been shown, tapping again will bring you back to the starting page.</li>
+        </ul>
+
+        <p>Known limitations:</p>
+        <ul>
+          <li>Some browsers (especially on phones) do not support full screen mode. In this case, after pressing the "start" buttonm, the very first tap will directly show the first color of the palette.</li>
+          <li>The library that provides the color-picker does not allow to select twice in a row the same color (kinda, the actual issue is a bit more technical). If you need to insert twice in a row the same color, insert it once, then insert another dummy colour, then insert the target colour again and finally get rid of the dummy colour.</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

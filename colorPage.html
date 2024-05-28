@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Screen</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body onclick="toggleColor()">
+<script>
+    // Function to request full-screen mode
+    function requestFullScreen(element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+            return true;
+        } else if (element.mozRequestFullScreen) { // Firefox
+            return true;
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) { // Chrome, Safari & Opera
+            element.webkitRequestFullscreen();
+            return true;
+        } else if (element.msRequestFullscreen) { // IE/Edge
+            element.msRequestFullscreen();
+            return true;
+        }
+        return false;
+    }
+
+    // Function to exit full-screen mode
+    function exitFullScreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari & Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
+    }
+
+    // Parse the URL to get the list of colors to display.
+    const urlParams = new URLSearchParams(window.location.search);
+    const colors_url_param = urlParams.get('colors')
+    const color_palette = JSON.parse(colors_url_param);
+
+    // Array to store the colors, with black in between.
+    const colors = [];
+
+    // Alternate between a palette color and black.
+    for(let i=0; i<color_palette.length; i++) {
+        // Add the i-th user-selected color, then add black.
+        colors.push(color_palette[i]);
+        colors.push('#000000');
+    }
+
+    // Index of the currently displayed color
+    var currentIndex = -1;
+
+    // Function to toggle between colors and black
+    function toggleColor() {
+        // Try to switch to full screen and exit
+        if(currentIndex < 0) {
+            currentIndex = 0;
+            if(requestFullScreen(document.documentElement))
+              return;
+            if(requestFullScreen(document))
+              return;
+        }
+
+        // Display the next color, or exit if no more colors are remaining
+        if(currentIndex < colors.length) {
+            document.body.style.backgroundColor = colors[currentIndex];
+            currentIndex++;
+        } else {
+            exitFullScreen();
+            window.location.href = `index.html?colors=${colors_url_param}`;
+        }
+    }
+
+</script>
+</body>
+</html>
